@@ -1,0 +1,25 @@
+<div class="section-up col-11 mx-auto">
+
+<h2 class="text-center mb-1"> Upcoming Events</h2>
+<div class="row row-cols-4 g-4">
+  <% @events.future.each do |event| %>
+    <div class="col">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between">
+          <p><%= event.attendees.count %> people coming!</p>
+          <%= link_to event.title, event_path(event.id), class:"fs-4 text-dark text-decoration-none" %>
+          <%= event.location %>
+        </div>
+        <div class="card-body">
+          <%= event.description %>
+        </div>
+        <div class="card-footer d-flex justify-content-between">
+          <p class="fs-6 text-dark">Created By: <%= link_to event.user.email, user_path(event.user) %></p>
+          <p class="fs-6 text-dark">Event Date: <%= event.date %></p>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+</div>
+
