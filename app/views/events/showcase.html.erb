@@ -1,0 +1,56 @@
+<div class="container">
+  <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-indicators bg-dark">
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+    <div class="carousel-inner">
+      <% @events.each do |event| %>
+        <% if event == Event.last %>
+          <div class="carousel-item active">
+          <% else %>
+            <div class="carousel-item">
+            <% end %>
+            <div class="card bg-dark text-white">
+              <div class="card-header d-flex justify-content-between py-3">
+                <p class="text-white"><%= event.attendees.count %> people coming!</p>
+                <%= link_to event.title, event_path(event.id), class:"fs-4 text-white text-decoration-none text-center" %>
+                <p class="text-white">Location: <%= event.location %></p>
+              </div>
+              <div class="card-body py-5">
+                <div class='row d-flex justify-content-center'>
+                  <div class='col-8 text-center'>
+                    <%= event.description %>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer py-3">
+                <div class="row py-4">
+
+                  <div class="progress gx-0" style="height: 3vh;">
+                    <div class="progress-bar bg-danger <%= 'd-none' if event.attendees.count.zero? %>" role="progressbar" style="width: calc(100% / <%= event.attend_limit.to_f / event.attendees.count.to_f %>);" aria-valuenow="<%= 100 / (event.attend_limit.to_f / event.attendees.count.to_f) %>" aria-valuemin="0" aria-valuemax="100"><%= event.attendees.count %> / <%= event.attend_limit %> Person</div>
+                  </div>
+
+                </div>
+                <div class="row py-3">
+                  <div class='d-flex justify-content-between '>
+                    <p class="fs-6 text-white">Created By: <%= link_to event.user.name, user_path(event.user) %></p>
+                    <p class="fs-6 text-white">Event Date: <%= event.date %></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </div>

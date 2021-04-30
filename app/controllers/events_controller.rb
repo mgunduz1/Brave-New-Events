@@ -1,9 +1,14 @@
 class EventsController < ApplicationController
   before_action :set_event, only: %i[ show edit update destroy ]
-  before_action :authenticate_user!, except: %i[index show]
+  before_action :authenticate_user!, except: %i[index show showcase]
   # GET /events or /events.json
   def index
     @events = Event.all
+  end
+
+
+  def showcase
+    @events = Event.last(3)
   end
 
   # GET /events/1 or /events/1.json
