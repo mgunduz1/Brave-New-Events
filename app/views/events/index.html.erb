@@ -14,7 +14,7 @@
           <%= event.description %>
         </div>
         <div class="card-footer d-flex justify-content-between">
-          <p class="fs-6 text-dark">Created By: <%= link_to event.user.email, user_path(event.user) %></p>
+          <p class="fs-6 text-dark">Created By: <%=  event.user.name %></p>
           <p class="fs-6 text-dark">Event Date: <%= event.date %></p>
         </div>
       </div>
