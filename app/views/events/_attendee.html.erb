@@ -1,0 +1,9 @@
+<% if @attendee.nil? %>
+<h6> EVENT IS FULL</h6>
+<% else %>
+<%= form_for @attendee do |f| %>
+  <%= f.hidden_field :event_id, value: @event.id %>
+    <%= f.hidden_field :user_id, value: current_user.id %>
+  <%= f.submit "Join to this event!", class:"btn btn-primary" %>
+<% end %>
+<% end %>

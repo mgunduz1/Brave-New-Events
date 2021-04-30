@@ -8,6 +8,15 @@ class EventsController < ApplicationController
 
   # GET /events/1 or /events/1.json
   def show
+    if @event.attendees.count.to_i < @event.attend_limit.to_i
+      @attendee = Attendee.new
+      end
+      @attender = Attendee.where(user_id: current_user.id, event_id: @event.id, will_join: true).first
+      @attendee_count = @event.attendees.where(will_join: true).count
+      @attendee_list = @event.attendees.all.where(will_join: true)
+      if user_signed_in?
+        @will_join = Attendee.where(user_id: current_user.id, event_id: @event.id, will_join: true).any? ? true : false
+      end
   end
 
   # GET /events/new
