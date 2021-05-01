@@ -1,44 +1,60 @@
-<p id="notice"><%= notice %></p>
-
-<p class="fw-bold fs-4"><%= @attendee_count %> people coming to this event</p>
-
-<div class="btn-group">
-  <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-    See all Attendents
-  </button>
-  <ul class="dropdown-menu dropdown-menu-end">
-  <% @attendee_list.each do |a| %>
-    <li class="dropdown-item" type="button"><%= link_to a.user.name, user_path(a.user), class:"text-decoration-none" %></li>
-    <% end %>
-  </ul>
-</div>
-
-<div class='row mb-3'>
-  <div class="col">
-    <div class="card"> 
-    <div class="card-header">
-    <p class="fs-4 text-dark text-center"><%= @event.title %></p>
-      <p class="text-end"><%= @event.location %></p>
-    </div>
-      <div class="card-body">
-            <%= @event.description %>
-            </div>
-            <div class="card-footer d-flex justify-content-between">
-         <p>Created By: <%= link_to @event.user.name, user_path(@event.user) %></p>
-         <p>Event Date: <%= @event.date %></p>
-            </div>
-</div>
-</div>
-</div>
-
 <% if @event.user != current_user %>
 <% case @will_join %>
 <% when true %>
+<p class="fs-3 text-success fw-bold">You are going to this event!</p>
+ <%= link_to 'Not comin', attendee_path(@attender), class: 'btn btn-outline-danger btn-sm ml-3', method: :delete %>
 <% when false %>
- 
+<%= render partial: "events/attendee", locals: { event_id: @event.id } %>
 <% end %>
 <% else %>
+<p class="fs-3 text-success fw-bold">You are the creator this event!</p>
+<%= link_to 'Cancel this event', @event, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-md btn-danger text-white" %>
+<%= link_to 'Edit', edit_event_path(@event), class:"btn btn-md btn-dark text-white" %> 
 <% end %>
 
 
 <%= link_to 'Back to MainPage', events_path, class:"btn btn-secondary text-white" %>
+ 
+
+            <div class="card bg-dark mx-auto">
+              <div class="card-header d-flex justify-content-between py-3">
+                <p class=""><%= @event.attendees.count %> people coming!</p>
+               <h2 class=""> <%= @event.title %></h2>
+                <p class="">Location: <%= @event.location %></p>
+              </div>
+              <div class="card-body py-5">
+                <div class='row d-flex justify-content-center'>
+                  <div class='col-8 text-center'>
+                    <%= @event.description %>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer py-3">
+                <div class="row py-4">
+
+                  <div class="progress gx-0" style="height: 3vh;">
+                    <div class="progress-bar <%= 'd-none' if @event.attendees.count.zero? %>" role="progressbar" style="width: calc(100% / <%= @event.attend_limit.to_f / @event.attendees.count.to_f %>);" aria-valuenow="<%= 100 / (@event.attend_limit.to_f / @event.attendees.count.to_f) %>" aria-valuemin="0" aria-valuemax="100"><%= @event.attendees.count %> / <%= @event.attend_limit %> Person</div>
+                  </div>
+
+                </div>
+                <div class="row py-3">
+                  <div class='d-flex justify-content-between '>
+                    <p class="fs-6 ">Created By: <%= link_to @event.user.name, user_path(@event.user), class:"text-decoration-none text-white" %></p>
+                    <p class="fs-6 ">Event Date: <%= @event.date %></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="btn-group">
+  <button type="button" class="btn neon-button dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+    See all Attendents
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+  <% @attendee_list.each do |a| %>
+    <li class="dropdown-item text-center" type="button"><%= link_to a.user.name, user_path(a.user), style:"text-decoration: none; font-size:1.5rem; font-weight: 500;" %></li>
+    <% end %>
+  </ul>
+</div>
+
+
+
