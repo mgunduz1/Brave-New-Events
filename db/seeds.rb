@@ -9,7 +9,7 @@
 
 require 'faker'
 
-90.times do |x|
+80.times do |x|
     
     name  = Faker::Name.name
     email = "try@try#{x+1}"
@@ -39,14 +39,11 @@ require 'faker'
           end
 
 
-          1000.times do 
+          800.times do 
             event_id = rand(1..50)
-            user_id = rand(16..90)
-            will_join = true
+            user_id = rand(16..80)
             next if Attendee.where(event_id:                 event_id,
-              user_id:                 user_id,
-              will_join:              will_join).exists?
+              user_id:                 user_id).exists?
             Attendee.create!(event_id:                 event_id,
-                user_id:                 user_id,
-                will_join:              will_join)
+                user_id:                 user_id)
               end
