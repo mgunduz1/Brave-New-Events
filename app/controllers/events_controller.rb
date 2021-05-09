@@ -1,6 +1,6 @@
 class EventsController < ApplicationController
   before_action :set_event, only: %i[ show edit update destroy ]
-  before_action :authenticate_user!, except: %i[index show showcase expireds]
+  before_action :authenticate_user!, except: %i[showcase]
   # GET /events or /events.json
   def index
     @events = Event.future.order(:date)
@@ -11,18 +11,23 @@ class EventsController < ApplicationController
   end
 
   def showcase
-    @events = Event.last(3)
+    @events = Event.future.last(3)
+    @most_popular = Event.future.left_joins(:attendees).group(:id).order('COUNT(attendees.id) DESC', attend_limit: :asc).first(3) 
+    @almost_full = Event.future.left_joins(:attendees).group(:id).having('COUNT(attendees.id) > attend_limit - 5').having('COUNT(attendees.id) < attend_limit').order('COUNT(attendees.id) DESC').limit(3)
+    @soon = Event.future.order('date ASC').limit(3)
   end
 
-  # GET /events/1 or /events/1.json
   def show
     if @event.attendees.count.to_i < @event.attend_limit.to_i
       @attendee = Attendee.new
       end
+
+      @percentage = @event.attend_limit.to_f / @event.attendees.count.to_f
+
       @attender = Attendee.where(user_id: current_user.id, event_id: @event.id, will_join: true).first
       @attendee_count = @event.attendees.where(will_join: true).count
       @attendee_list = @event.attendees.all.where(will_join: true)
-      if user_signed_in?
+      if user_signed_in? && Event.future.all.include?(@event)
         @will_join = Attendee.where(user_id: current_user.id, event_id: @event.id, will_join: true).any? ? true : false
       end
   end
@@ -68,7 +73,7 @@ class EventsController < ApplicationController
   def destroy
     @event.destroy
     respond_to do |format|
-      format.html { redirect_to events_url, notice: "Event was successfully destroyed." }
+      format.html { redirect_to root_url, notice: "Event was successfully destroyed." }
       format.json { head :no_content }
     end
   end
