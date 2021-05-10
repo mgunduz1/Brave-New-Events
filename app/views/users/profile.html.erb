@@ -1,67 +1,99 @@
-<div class='col-12 d-flex justify-content-between mb-3'>
-<div class=''></div>
-<h2 class="text-center">Event's that created by <%= @user.name %></h2>
-<%= link_to 'Back to MainPage', events_path, class:"btn btn-secondary text-white" %>
-</div>
-<div class="container-flex mb-5">
-
-<% if @user.events.empty? %>
-<h4> <%= @user.name %> not created any event yet! </h4>
-<% else %>
-<div class="row row-cols-4 g-4">
-<% @user.events.each do |event| %>
-    <div class="col">
-      <div class="card">
-        <div class="card-header d-flex justify-content-between">
-          <p><%= event.attendees.count %> people coming!</p>
-          <h4 class="text-dark"><%= link_to event.title, event_path(event.id), class:"text-dark text-decoration-none" %></h4>  
-          <%= event.location %>
-        </div>
-        <div class="card-body">
-          <%= event.description %>
-        </div>
-        <div class="card-footer d-flex justify-content-between">
-          <p class="fs-6 text-dark">Created By: <%= event.user.email %></p>
-          <p class="fs-6 text-dark">Event Date: <%= event.date %></p>
-        </div>
-      </div>
-    </div>
-  <% end %>
-</div>
-
-    <% end %>
-
-</div>
 <% x = 1 %>
+<div class="container-fluid profile-margin">
+<div class="row d-flex justify-content-evenly">
+<div class='col-6'>
+<h1 class="text-center profile-head fs-1"><%= @user.name %></h1>
 
-<div class="container-flex">
-<div class="row">
+<div class='row col-10 mx-auto mt-5'>
 
 <div class="col-6">
-<h2 class="text-center mt-4 mb-2">Event's that <%= @user.name %> will attend</h2>
+<p class="profile-text fs-6">Member since: <span class="profile-span"><%= "#{time_ago_in_words(@user.created_at)} ago" %></span></p>
+<p class="profile-text fs-6">Email Address: <span class="profile-span"><%= @user.email %></span></p>
+</div>
+<div class="col-6">
+<% if @user == current_user %>
+<%= link_to 'User Settings', edit_user_registration_path(@user), class:"btn btn-md btn-settings float-end" %> 
+<% end %>
+</div>
+</div>
+</div>
+
+<div class="col-6">
+
+<h3 class="text-center profile-header">Event's Created (Past & Future)</h3>
+
+<% if @user.events.empty? %>
+<h4 class="profile-not-yet mx-auto mt-4"> <%= @user.name %> not created any event yet! </h4>
+<% else %>
+<% @user.events.each do |event| %>
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="heading<%= x %>">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<%= x %>" aria-expanded="false" aria-controls="collapse<%= x %>">
+        <%= event.title %>
+      </button>
+    </h2>
+    <div id="collapse<%= x %>" class="accordion-collapse collapse" aria-labelledby="heading<%= x %>" data-bs-parent="#accordionExample">
+      <div class="accordion-body accordion-bg">
+       <div class="card profile-card mx-auto">
+        <div class="card-header d-flex justify-content-between">
+          <p><%= event.attendees.count %> people coming!</p>
+          <h6><%= link_to event.title, event_path(event.id), class:"text-decoration-none text-white" %></h6>
+          <p><%= event.location %></p>
+        </div>
+        <div class="card-body py-5">
+          <p class="text-center fw-bold"><%= event.description.truncate(40) %></p>
+        </div>
+        <div class="card-footer d-flex justify-content-between">
+          <p>Created By: <%= event.user.name %></p>
+          <p>Event Date: <%= event.date %></p>
+        </div>
+      </div>
+          <% x += 1 %>
+
+      </div>
+        
+    </div>
+  </div>
+  <% end %>
+
+
+    <% end %>
+</div>
+</div>
+</div>
+
+<br>
+<hr>
+<br>
+
+<div class="container-fluid">
+<div class="row d-flex justify-content-evenly">
+
+<div class="col-6">
+<h3 class="text-center profile-header">Event's will be Attend</h3>
 <div class="accordion" id="accordionExample">
 <% @user.attendees.each do |event| %>
 <%= next if event.event.date < Date.today %>
   <div class="accordion-item">
     <h2 class="accordion-header" id="heading<%= x %>">
-      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<%= x %>" aria-expanded="true" aria-controls="collapse<%= x %>">
-        <%= event.event.title %> 
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<%= x %>" aria-expanded="false" aria-controls="collapse<%= x %>">
+        <%= event.event.title %>
       </button>
     </h2>
     <div id="collapse<%= x %>" class="accordion-collapse collapse" aria-labelledby="heading<%= x %>" data-bs-parent="#accordionExample">
-      <div class="accordion-body">
-       <div class="card">
+      <div class="accordion-body accordion-bg">
+       <div class="card profile-card mx-auto">
         <div class="card-header d-flex justify-content-between">
           <p><%= event.event.attendees.count %> people coming!</p>
-          <h4 class="text-dark"><%= link_to event.event.title, event_path(event.event.id), class:"text-dark text-decoration-none" %></h4>
-          <%= event.event.location %>
+          <h6><%= link_to event.event.title, event_path(event.event.id), class:"text-decoration-none text-white" %></h6>
+          <p><%= event.event.location %></p>
         </div>
-        <div class="card-body">
-          <%= event.event.description %>
+        <div class="card-body py-5">
+          <p class="text-center fw-bold"><%= event.event.description.truncate(40) %></p>
         </div>
         <div class="card-footer d-flex justify-content-between">
-          <p class="fs-6 text-dark">Created By: <%= event.event.user.email %></p>
-          <p class="fs-6 text-dark">Event Date: <%= event.event.date %></p>
+          <p>Created By: <%= event.event.user.name %></p>
+          <p>Event Date: <%= event.event.date %></p>
         </div>
       </div>
           <% x += 1 %>
@@ -75,30 +107,30 @@
 </div>
 
 <div class="col-6">
-<h2 class="text-center mt-4 mb-2">Event's that <%= @user.name %> attended in the past</h2>
+<h3 class="text-center profile-header">Event's attended in Past</h3>
 <div class="accordion" id="accordionExample">
 <% @user.attendees.each do |event| %>
 <%= next if event.event.date >= Date.today %>
   <div class="accordion-item">
     <h2 class="accordion-header" id="heading<%= x %>">
-      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<%= x %>" aria-expanded="true" aria-controls="collapse<%= x %>">
-        <%= event.event.title %> 
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<%= x %>" aria-expanded="false" aria-controls="collapse<%= x %>">
+        <%= event.event.title %>
       </button>
     </h2>
     <div id="collapse<%= x %>" class="accordion-collapse collapse" aria-labelledby="heading<%= x %>" data-bs-parent="#accordionExample">
-      <div class="accordion-body">
-       <div class="card">
+      <div class="accordion-body accordion-bg">
+       <div class="card profile-card mx-auto">
         <div class="card-header d-flex justify-content-between">
           <p><%= event.event.attendees.count %> people coming!</p>
-          <h4 class="text-dark"><%= link_to event.event.title, event_path(event.event.id), class:"text-dark text-decoration-none" %></h4>
-          <%= event.event.location %>
+          <h6><%= link_to event.event.title, event_path(event.event.id), class:"text-decoration-none text-white" %></h6>
+          <p><%= event.event.location %></p>
         </div>
-        <div class="card-body">
-          <%= event.event.description %>
+        <div class="card-body py-5">
+          <p class="text-center fw-bold"><%= event.event.description.truncate(40) %></p>
         </div>
         <div class="card-footer d-flex justify-content-between">
-          <p class="fs-6 text-dark">Created By: <%= event.event.user.email %></p>
-          <p class="fs-6 text-dark">Event Date: <%= event.event.date %></p>
+          <p>Created By: <%= event.event.user.name %></p>
+          <p>Event Date: <%= event.event.date %></p>
         </div>
       </div>
           <% x += 1 %>
@@ -108,8 +140,6 @@
     </div>
   </div>
  <% end %>
-
-
 </div>
 </div>
 

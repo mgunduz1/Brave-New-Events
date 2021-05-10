@@ -13,3 +13,150 @@
  *= require_tree .
  *= require_self
  */
+
+
+ :root {
+    --clr-neon: hsl(317 100% 54%);
+    --clr-bg: hsl(323 21% 22%);
+    --clr-bg3: hsl(323 18% 93%);
+    --clr-neonx: hsl(86, 100%, 64%);
+  }
+  
+  @font-face {
+    font-family: 'neon-font';
+    src: url('fonts/AUTOMANI.TTF') format('truetype');
+  }
+  
+  @font-face {
+    font-family: 'neon-font3';
+    src: url('fonts/Monoton-Regular.ttf') format('truetype');
+  }
+  
+  @font-face {
+    font-family: 'neon-font4';
+    src: url('fonts/Tonight.ttf') format('truetype');
+  }
+  
+  @font-face {
+    font-family: 'neon-font2';
+    src: url('fonts/Neoneon-3zaD6.otf') format('opentype');
+  }
+  
+  @font-face {
+    font-family: 'neon-font5';
+    src: url('fonts/Parkvane-DLMx.ttf') format('truetype');
+  }
+  
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  
+  body {
+    background: var(--clr-bg);
+    font-family: DejaVu Serif;
+    max-width: 100vw;
+    font-weight: 900;
+  }
+
+
+
+.show-info-text, .profile-not-yet {
+    color: var(--clr-neon);
+    border: var(--clr-neon) 0.125em solid;
+    border-radius: 0.25em;
+    text-shadow: 0 0 0.125em hsl(0 0% 100% / 0.3), 0 0 0.45em var(--clr-neon);
+    box-shadow: inset 0 0 0.5em 0 var(--clr-neon), 0 0 0.5em 0 var(--clr-neon);
+    font-family: neon-font3;
+    font-size: 200%;
+    font-weight: 500;
+    padding: 0.5rem;
+    width: 100%;
+    text-align: center;
+  }
+  
+  .profile-not-yet, .btn-join {
+    color: var(--clr-neonx);
+    border: var(--clr-neonx) 0.125em solid;
+    border-radius: 0.25em;
+    text-shadow: 0 0 0.125em hsl(0 0% 100% / 0.3), 0 0 0.45em var(--clr-neonx);
+    box-shadow: inset 0 0 0.5em 0 var(--clr-neonx), 0 0 0.5em 0 var(--clr-neonx);
+    font-weight: 500;
+    }
+    .profile-not-yet {
+    padding: 0.5rem;
+    text-align: center;
+    font-size: 110%;
+    width: 60%;
+    font-family: neon-font5;
+    }
+  
+    .btn-join {
+      padding: 1rem;
+      font-weight: 900;
+      font-size: 130%;
+    }
+  
+  .show-button {
+    width: 60%;
+    font-weight: 900;
+    padding: 1rem;
+  }
+  
+  .profile-card {
+    background-color: #322f3d;
+    width: 45vw;
+    color: var(--clr-bg3);
+  }
+  
+  .accordion-bg {
+    background: var(--clr-bg);
+  }
+  
+  .accordion-button, .collapsed {
+    background: var(--clr-neonx);
+    color: var(--clr-neon);
+    text-align: center;
+  }
+  
+  .accordion-item {
+    font-size: 90%;
+    font-weight: 500;
+    border: none;
+  }
+  
+  .devise-links {
+    color: var(--clr-neon);
+    text-decoration: none;
+  }
+  
+  .accordion-button:not(.collapsed) {
+    color: var(--clr-neon);
+    background: var(--clr-neonx);
+    box-shadow: none;
+    text-align: center;
+  }
+  
+  .profile-text, .profile-header, .text-lighter {
+    color: var(--clr-bg3);
+  }
+  
+  .profile-header {
+    font-family: neon-font5;
+    font-weight: 900;
+  }
+  
+  .profile-span {
+    color: var(--clr-neonx);
+  }
+  
+  .btn-settings {
+    color: var(--clr-bg3);
+    background-color: #322f3d;
+    width: 50%;
+    padding: 1rem;
+    font-weight: 900;
+  }
+  
+  .profile-margin {
+    margin-top: 8vh;
+  }
