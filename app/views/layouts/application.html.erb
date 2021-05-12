@@ -13,19 +13,31 @@
 
   <body>
   <nav class="navbar navbar-light navbar-expand fixed-top" id="mainNav">
-    <div class="container-fluid">
+    <div class="container-fluid d-flex justify-content-between">
 <div>
   <% if user_signed_in? %>
-  <%= link_to 'Logout', destroy_user_session_path, method: :delete, class:"btn btn-md btn-danger text-white" %>
-  <%= link_to 'New Event', new_event_path, class:"btn btn-md btn-success text-white" %>
-  <%= link_to 'My profile', user_path(current_user), class:'btn btn-md btn-primary text-white' %>
+  <%= link_to 'My profile', user_path(current_user), class:'btn btn-md nav-button' %>
+    <%= link_to 'New Event', new_event_path, class:"btn btn-md nav-button" %>
   <% else %>
-  <%= link_to 'Register', new_user_registration_path, class:"btn btn-md btn-success text-white" %>
-  <%= link_to 'Login', new_user_session_path, class:"btn btn-md btn-primary text-white" %>
+  <%= link_to 'Register', new_user_registration_path, class:"btn btn-md nav-button" %>
+  <%= link_to 'Login', new_user_session_path, class:"btn btn-md nav-button" %>
   <% end %>
   </div>
   <div>
-  <%= link_to 'Main Page', root_path , class:'btn btn-md xxx' %>
+    <% if user_signed_in? %>
+    <div class="dropdown btn btn-md nav-button">
+  <p class="dropdown-toggle mb-0" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">BROWSE</p>
+  <ul class="dropdown-menu ddown-bg px-2" aria-labelledby="dropdownMenuButton1">
+   <li><%= link_to 'Browse Events', events_path, class:"dropdown-item btn btn-lg ddown-btn" %></li>
+   <li><%= link_to 'Search Users', user_search_path, class:"dropdown-item btn btn-lg ddown-btn" %></li>
+   <li><%= link_to 'Browse Past Events',  past_events_path,  class:"dropdown-item btn btn-lg ddown-btn" %></li>
+  </ul>
+</div>
+  <% end %>
+    <%= link_to 'Main Page', root_path , class:'btn btn-md nav-button' %>
+  <% if user_signed_in? %>
+  <%= link_to 'Logout', destroy_user_session_path, method: :delete, class:'btn btn-md nav-button' %>
+  <% end %>
      </div>
     </div>
 </nav>
@@ -33,5 +45,10 @@
   <p class="notice"><%= notice %></p>
        <p class="alert"><%= alert %></p>
     <%= yield %>
+
+
+<footer class="footer mt-auto py-5 footer-bg">
+
+</footer>
   </body>
 </html>
