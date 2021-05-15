@@ -1,25 +1,9 @@
-<% if @event.user != current_user %>
-<% case @will_join %>
-<% when true %>
-<p class="fs-3 text-success fw-bold">You are going to this event!</p>
- <%= link_to 'Not comin', attendee_path(@attender), class: 'btn btn-outline-danger btn-sm ml-3', method: :delete %>
-<% when false %>
-<%= render partial: "events/attendee", locals: { event_id: @event.id } %>
-<% end %>
-<% else %>
-<p class="fs-3 text-success fw-bold">You are the creator this event!</p>
-<%= link_to 'Cancel this event', @event, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-md btn-danger text-white" %>
-<%= link_to 'Edit', edit_event_path(@event), class:"btn btn-md btn-dark text-white" %> 
-<% end %>
-
-
-<%= link_to 'Back to MainPage', events_path, class:"btn btn-secondary text-white" %>
- 
-
-            <div class="card bg-dark mx-auto">
+<div class='row gx-0' style="margin-top: 10vh;">
+<div class='col-8'>
+            <div class="card show-card mx-auto">
               <div class="card-header d-flex justify-content-between py-3">
                 <p class=""><%= @event.attendees.count %> people coming!</p>
-               <h2 class=""> <%= @event.title %></h2>
+               <h2 class="title-text"> <%= @event.title %></h2>
                 <p class="">Location: <%= @event.location %></p>
               </div>
               <div class="card-body py-5">
@@ -33,7 +17,7 @@
                 <div class="row py-4">
 
                   <div class="progress gx-0" style="height: 3vh;">
-                    <div class="progress-bar <%= 'd-none' if @event.attendees.count.zero? %>" role="progressbar" style="width: calc(100% / <%= @event.attend_limit.to_f / @event.attendees.count.to_f %>);" aria-valuenow="<%= 100 / (@event.attend_limit.to_f / @event.attendees.count.to_f) %>" aria-valuemin="0" aria-valuemax="100"><%= @event.attendees.count %> / <%= @event.attend_limit %> Person</div>
+                    <div class="progress-bar progbar <%= 'd-none' if @event.attendees.count.zero? %>" role="progressbar" style="width: calc(100% / <%= @percentage %>);" aria-valuenow="<%= 100 / @percentage %>" aria-valuemin="0" aria-valuemax="100"><%= @event.attendees.count %> / <%= @event.attend_limit %> Person</div>
                   </div>
 
                 </div>
@@ -45,16 +29,56 @@
                 </div>
               </div>
             </div>
-            <div class="btn-group">
-  <button type="button" class="btn neon-button dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+<div class='row mx-auto mt-4 d-flex justify-content-between' style="width: 60vw; ">
+
+
+<% if @event.user != current_user %>
+<% case @will_join %>
+<% when true %>
+<div class='col-6'>
+<p class="show-info-text">You are going to this event!</p>
+</div>
+<div class='col-6'>
+<%= link_to 'NOT COMING', attendee_path(@attender), class: 'btn btn-outline-danger float-end fs-4 show-button', method: :delete %>
+</div>
+<% when false %>
+<div class='col-6'>
+<p class="show-info-text"><%= "#{distance_of_time_in_words_to_now(@event.date)} Left!" %></p>
+</div>
+<div class='col-6'>
+<%= render partial: "events/attendee", locals: { event_id: @event.id } %>
+</div>
+<% end %>
+<% else %>
+<p class="show-info-text">You are the creator this event!</p>
+<div class='col-6'>
+<%= link_to 'Cancel this event', @event, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-danger fw-bold fs-4 text-lighter py-2 w-100" %>
+</div>
+<div class='col-6'>
+<%= link_to 'Edit Event', edit_event_path(@event), class:"btn btn-dark text-lighter fw-bold fs-4 py-2 w-100" %>
+</div>
+
+<% end %>
+
+</div>
+
+
+</div>
+<div class='col-4'>
+
+            <div class="btn-group ml-3 ms-3">
+  <button type="button" class="btn show-info-text dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
     See all Attendents
   </button>
-  <ul class="dropdown-menu dropdown-menu-end">
+  <ul class="dropdown-menu dropdown-menu-end" id="ddown">
   <% @attendee_list.each do |a| %>
-    <li class="dropdown-item text-center" type="button"><%= link_to a.user.name, user_path(a.user), style:"text-decoration: none; font-size:1.5rem; font-weight: 500;" %></li>
+    <li class="dropdown-item text-center" type="button"><%= link_to a.user.name, user_path(a.user), style:"text-decoration: none; font-family: neon-font3;color: var(--clr-neon); font-size:1.5rem; font-weight: 500;" %></li>
     <% end %>
   </ul>
 </div>
 
 
 
+
+</div>
+</div>
