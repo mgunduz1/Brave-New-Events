@@ -1,3 +1,7 @@
+
+
+<div class='container-md mx-auto devise-container '>
+
 <%= form_with(model: event) do |form| %>
   <% if event.errors.any? %>
     <div id="error_explanation">
@@ -11,37 +15,60 @@
     </div>
   <% end %>
 
-  <div class="form-control">
-  <%= form.label "Title" %>
-    <%= form.text_field :title %>
+
+
+    <div class="field row col-10 mx-auto my-3 py-2">
+  <div class="col-6">
+  <%= form.label "Title ➫" , class:"input_label" %>
+    </div>
+    <div class='col-6'>
+    <%= form.text_field :title, class:"input_field" %>
+  </div>
   </div>
 
-    <div class="form-control">
-      <%= form.label "Location" %>
-    <%= form.text_field :location %>
+  <div class="field row col-10 mx-auto mb-3 py-2">
+  <div class='col-6'>
+    <%= form.label "Location ➦" , class:"input_label"  %>
+    </div>
+    <div class='col-6'>
+    <%= form.text_field :location , class:"input_field" %>
+  </div>
   </div>
 
-    <div class="form-control">
-      <%= form.label "Description" %>
-    <%= form.text_field :description %>
+  <div class="field row col-10 mx-auto mb-4 py-2">
+  <div class='col-6'>
+    <%= form.label "Description ➦" , class:"input_label"  %>
+    </div>
+    <div class='col-6'>
+   <%= form.text_field :description , class:"input_field" %>
+  </div>
   </div>
 
-    <div class="form-control">
-      <%= form.label "Date" %>
-      <%= form.date_select :date %>
+
+  <div class="field row col-10 mx-auto mb-3 py-4">
+      <div class='col-6 d-flex flex-column'>
+<%= form.label "▼ Date of Event ▼" , class:"input_label mb-2 text-center"  %>
+<div class='d-flex flex-row justify-content-center'>
+   <%= form.date_select :date, class:"input_field" %>
+   </div>
+  </div>
+  <div class='col-6 d-flex flex-column'>
+    <%= form.label "▼ Attender Limit ▼" , class:"input_label mb-2 text-center"  %>
+       <%= form.number_field :attend_limit, class:"input_field w-50 mx-auto" %>
     </div>
 
-        <div class="form-control">
-      <%= form.label "How many People Can come to his event?" %>
-    <%= form.number_field :attend_limit %>
   </div>
 
-      <div class="form-control">
+
+  <div class="actions d-flex justify-content-center pb-3">
+    <%= form.submit class:"btn btn-join fs-2" %>
+  </div>
+
+
     <%= form.hidden_field :user_id, value: current_user.id %>
-  </div>
 
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
 <% end %>
+
+
+
+  </div>
