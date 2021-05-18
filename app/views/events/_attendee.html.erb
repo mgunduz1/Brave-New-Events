@@ -4,6 +4,6 @@
 <%= form_for @attendee do |f| %>
   <%= f.hidden_field :event_id, value: @event.id %>
     <%= f.hidden_field :user_id, value: current_user.id %>
-  <%= f.submit "Join to this event!", class:"btn btn-primary" %>
+  <%= f.submit "Join to this Event!", class:"btn btn-join float-end" %>
 <% end %>
 <% end %>
