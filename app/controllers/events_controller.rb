@@ -1,5 +1,5 @@
 class EventsController < ApplicationController
-  before_action :set_event, only: %i[ show edit update destroy ]
+  before_action :set_event, only: %i[show edit update destroy]
   before_action :authenticate_user!, except: %i[showcase]
   # GET /events or /events.json
   def index
@@ -12,24 +12,23 @@ class EventsController < ApplicationController
 
   def showcase
     @events = Event.future.last(3)
-    @most_popular = Event.future.left_joins(:attendees).group(:id).order('COUNT(attendees.id) DESC', attend_limit: :asc).first(3) 
+    @most_popular = Event.future.left_joins(:attendees).group(:id).order('COUNT(attendees.id) DESC',
+                                                                         attend_limit: :asc).first(3)
     @almost_full = Event.future.left_joins(:attendees).group(:id).having('COUNT(attendees.id) > attend_limit - 5').having('COUNT(attendees.id) < attend_limit').order('COUNT(attendees.id) DESC').limit(3)
     @soon = Event.future.order('date ASC').limit(3)
   end
 
   def show
-    if @event.attendees.count.to_i < @event.attend_limit.to_i
-      @attendee = Attendee.new
-      end
+    @attendee = Attendee.new if @event.attendees.count.to_i < @event.attend_limit.to_i
 
-      @percentage = @event.attend_limit.to_f / @event.attendees.count.to_f
+    @percentage = @event.attend_limit.to_f / @event.attendees.count.to_f
 
-      @attender = Attendee.where(user_id: current_user.id, event_id: @event.id, will_join: true).first
-      @attendee_count = @event.attendees.where(will_join: true).count
-      @attendee_list = @event.attendees.all.where(will_join: true)
-      if user_signed_in? && Event.future.all.include?(@event)
-        @will_join = Attendee.where(user_id: current_user.id, event_id: @event.id, will_join: true).any? ? true : false
-      end
+    @attender = Attendee.where(user_id: current_user.id, event_id: @event.id, will_join: true).first
+    @attendee_count = @event.attendees.where(will_join: true).count
+    @attendee_list = @event.attendees.all.where(will_join: true)
+    if user_signed_in? && Event.future.all.include?(@event)
+      @will_join = Attendee.where(user_id: current_user.id, event_id: @event.id, will_join: true).any? ? true : false
+    end
   end
 
   # GET /events/new
@@ -38,8 +37,7 @@ class EventsController < ApplicationController
   end
 
   # GET /events/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /events or /events.json
   def create
@@ -47,7 +45,7 @@ class EventsController < ApplicationController
 
     respond_to do |format|
       if @event.save
-        format.html { redirect_to @event, notice: "Event was successfully created." }
+        format.html { redirect_to @event, notice: 'Event was successfully created.' }
         format.json { render :show, status: :created, location: @event }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -60,7 +58,7 @@ class EventsController < ApplicationController
   def update
     respond_to do |format|
       if @event.update(event_params)
-        format.html { redirect_to @event, notice: "Event was successfully updated." }
+        format.html { redirect_to @event, notice: 'Event was successfully updated.' }
         format.json { render :show, status: :ok, location: @event }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -73,19 +71,20 @@ class EventsController < ApplicationController
   def destroy
     @event.destroy
     respond_to do |format|
-      format.html { redirect_to root_url, notice: "Event was successfully destroyed." }
+      format.html { redirect_to root_url, notice: 'Event was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_event
-      @event = Event.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def event_params
-      params.require(:event).permit(:title, :location, :description, :date, :user_id, :attend_limit)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_event
+    @event = Event.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def event_params
+    params.require(:event).permit(:title, :location, :description, :date, :user_id, :attend_limit)
+  end
 end

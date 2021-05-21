@@ -10,10 +10,9 @@ class AttendeesController < ApplicationController
 
   def destroy
     @attender = Attendee.find(params[:id])
-      flash[:alert] = @attender.destroy ? 'Deleted successfully' : 'Fail. Try again.'
-      redirect_back(fallback_location: root_path)
-    end
-
+    flash[:alert] = @attender.destroy ? 'Deleted successfully' : 'Fail. Try again.'
+    redirect_back(fallback_location: root_path)
+  end
 
   def attendee_params
     params.require(:attendee).permit(:event_id, :user_id, :will_join)
