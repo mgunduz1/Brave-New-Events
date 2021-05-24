@@ -318,15 +318,18 @@ body {
   font-size: 4rem;
 }
 
+.profile-head, .newpa th , .ddown-btn {
+text-shadow: 
+0.02vw 0vw .06vw #ffd8fe, .05vw 0vw .06vw #ffd8fe, .1vw 0vw .06vw #ffd8fe, 
+0.02vw 0vw   0vw #f257fe, .05vw 0vw   0vw #f257fe, .1vw 0vw   0vw #f257fe,
+0.02vw 0vw  0.02vw #f257fe, .05vw 0vw  0.02vw #f257fe, .1vw 0vw  0.02vw #f257fe,
+0.02vw 0vw   0.5vw #f257fe, .05vw 0vw   0.5vw #f257fe, .1vw 0vw   0.5vw #f257fe, 
+0.02vw 0vw   0.25vw #e50bfe, .05vw 0vw   0.2vw #e50bfe, .1vw 0vw   1.2vw #e50bfe;
+}
+
 .profile-head {
   font-family:neon-font5;
   color: #ffd8d8;
-  text-shadow: 
-  0.02vw 0vw .06vw #ffd8fe, .05vw 0vw .06vw #ffd8fe, .1vw 0vw .06vw #ffd8fe, 
-  0.02vw 0vw   0vw #f257fe, .05vw 0vw   0vw #f257fe, .1vw 0vw   0vw #f257fe,
-  0.02vw 0vw  0.02vw #f257fe, .05vw 0vw  0.02vw #f257fe, .1vw 0vw  0.02vw #f257fe,
-  0.02vw 0vw   0.5vw #f257fe, .05vw 0vw   0.5vw #f257fe, .1vw 0vw   0.5vw #f257fe, 
-  0.02vw 0vw   0.25vw #e50bfe, .05vw 0vw   0.2vw #e50bfe, .1vw 0vw   1.2vw #e50bfe;
   font-weight: 200;
   font-size: 4rem;
 }
@@ -345,11 +348,6 @@ body {
   text-decoration: none;
   color: #322f3d;
 }
-
-.newpa {
-
-}
-
 
 .newpa::-webkit-scrollbar, #ddown::-webkit-scrollbar {
   width: 12px;
@@ -375,12 +373,6 @@ body {
   font-family:neon-font2;
   color: var(--clr-neon);
   font-size: 1.7rem;
-  text-shadow: 
-  0.02vw 0vw .06vw #ffd8fe, .05vw 0vw .06vw #ffd8fe, .1vw 0vw .06vw #ffd8fe, 
-  0.02vw 0vw   0vw #f257fe, .05vw 0vw   0vw #f257fe, .1vw 0vw   0vw #f257fe,
-  0.02vw 0vw  0.02vw #f257fe, .05vw 0vw  0.02vw #f257fe, .1vw 0vw  0.02vw #f257fe,
-  0.02vw 0vw   0.5vw #f257fe, .05vw 0vw   0.5vw #f257fe, .1vw 0vw   0.5vw #f257fe, 
-  0.02vw 0vw   0.25vw #e50bfe, .05vw 0vw   0.2vw #e50bfe, .1vw 0vw   1.2vw #e50bfe;
 }
 
 .newpa tbody  {
@@ -395,12 +387,6 @@ body {
 
 .ddown-btn {
   color: #ffd8d8;
-  text-shadow: 
-  0.02vw 0vw .06vw #ffd8fe, .05vw 0vw .06vw #ffd8fe, .1vw 0vw .06vw #ffd8fe, 
-  0.02vw 0vw   0vw #f257fe, .05vw 0vw   0vw #f257fe, .1vw 0vw   0vw #f257fe,
-  0.02vw 0vw  0.02vw #f257fe, .05vw 0vw  0.02vw #f257fe, .1vw 0vw  0.02vw #f257fe,
-  0.02vw 0vw   0.5vw #f257fe, .05vw 0vw   0.5vw #f257fe, .1vw 0vw   0.5vw #f257fe, 
-  0.02vw 0vw   0.25vw #e50bfe, .05vw 0vw   0.2vw #e50bfe, .1vw 0vw   1.2vw #e50bfe;
   font-family: neon-font5;
   box-shadow: none;
   font-weight: 200;
