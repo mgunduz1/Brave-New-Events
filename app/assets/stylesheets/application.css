@@ -14,9 +14,7 @@
  *= require_self
  */
 
-
-
- :root {
+:root {
   --clr-neon: hsl(317 100% 54%);
   --clr-bg: hsl(323 21% 22%);
   --clr-bg3: hsl(323 18% 93%);
@@ -58,7 +56,7 @@ body {
   max-width: 100vw;
   font-weight: 900;
 }
-COMMENTSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+
 #third .card, #second .card, #fourth .card, #fifth .card {
   border-radius: 0.25em;
   color: var(--clr-bg3);
@@ -91,7 +89,7 @@ COMMENTSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 }
 
 #third, #fifth {
-  min-height: 85vh;
+  min-height: 90vh;
   width: 100%;
   background-position: center;
   background-repeat: no-repeat;

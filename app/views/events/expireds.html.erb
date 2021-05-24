@@ -1,0 +1,44 @@
+
+<h1 class="neon-header my-5 text-center">PAST EVENTS INDEX</h1>
+
+<input type="text" class="form-control mx-auto" id="event_query" placeholder="Search for location or title" data-reflex="input->Filter#filter" data-resource="Event" data-param="query" data-reflex-root="#events-table" style="width: 80%;">
+
+<div class='newpa'>
+
+<table class="table" id="events-table">
+  <thead>
+    <tr>
+      <th scope="col">&nbsp; &nbsp; Title</th>
+      <th scope="col">Location</th>
+      <th scope="col">Creator</th>
+      <th scope="col">When</th>
+      <th scope="col">People Attended</th>
+    </tr>
+  </thead>
+  
+ 
+  <tbody>
+  <div class='insdays'>
+    <% @events.each do |event| %>
+     <tr>
+      <td><%= link_to event.title, event_path(event) %></td>
+        <td><%= event.location %></td>
+        <td><%= event.user.name %></td>
+        <td><%= event.date %></td>
+        <% case (event.attend_limit - event.attendees.count) %>
+        <% when 0 %>
+        <td><%= event.attendees.count %><span class="badge bg-secondary"> EVENT WAS FULL </span></td>
+        <% else %>
+        <td><%= event.attendees.count %></td>
+        <% end %>
+      </tr>
+     <% end %>
+       </div>
+  </tbody>
+
+
+</table>
+
+  
+</div>
+

@@ -1,25 +1,50 @@
-<div class="section-up col-11 mx-auto">
 
-<h2 class="text-center mb-1"> Upcoming Events</h2>
-<div class="row row-cols-4 g-4">
-  <% @events.each do |event| %>
-    <div class="col">
-      <div class="card">
-        <div class="card-header d-flex justify-content-between">
-          <p><%= event.attendees.count %> people coming!</p>
-          <%= link_to event.title, event_path(event.id), class:"fs-4 text-dark text-decoration-none" %>
-          <%= event.location %>
-        </div>
-        <div class="card-body">
-          <%= event.description %>
-        </div>
-        <div class="card-footer d-flex justify-content-between">
-          <p class="fs-6 text-dark">Created By: <%=  event.user.name %></p>
-          <p class="fs-6 text-dark">Event Date: <%= event.date %></p>
-        </div>
-      </div>
-    </div>
-  <% end %>
-</div>
+<h1 class="neon-header my-5 text-center">EVENTS INDEX</h1>
+
+<input type="text" class="form-control mx-auto" id="event_query" placeholder="Search for location or title" data-reflex="input->Filter#filter" data-resource="Event" data-param="query" data-reflex-root="#events-table" style="width: 80%;">
+
+<div class='newpa'>
+
+<table class="table" id="events-table">
+  <thead>
+    <tr>
+      <th scope="col">&nbsp; &nbsp; Title</th>
+      <th scope="col">Location</th>
+      <th scope="col">Creator</th>
+      <th scope="col">When</th>
+      <th scope="col">Spots Left</th>
+    </tr>
+  </thead>
+  
+ 
+  <tbody>
+  <div class='insdays'>
+    <% @events.each do |event| %>
+     <tr>
+      <% if (Date.today..(Date.today + 30.days)).include?(event.date) %>
+      <td><%= link_to event.title, event_path(event) %>   <span class="badge bg-success"><%= distance_of_time_in_words_to_now(event.date) %> left!</span></td>
+      <% else %>
+      <td><%= link_to event.title, event_path(event) %></td>
+      <% end %>
+        <td><%= event.location %></td>
+        <td><%= event.user.name %></td>
+        <td><%= event.date %></td>
+        <% case (event.attend_limit - event.attendees.count) %>
+        <% when 0 %>
+        <td><span class="badge bg-secondary"> EVENT IS FULL </span></td>
+        <% when 1 %>
+        <td><span class="badge bg-danger"> LAST SPOT! </span></td>
+        <% else %>
+        <td><%= "#{event.attend_limit - event.attendees.count} spots left!"%></td>
+        <% end %>
+      </tr>
+     <% end %>
+       </div>
+  </tbody>
+
+
+</table>
+
+  
 </div>
 
