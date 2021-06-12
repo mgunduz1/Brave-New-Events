@@ -27,6 +27,8 @@ gem "hiredis"
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
+gem 'redis-session-store'
+
 gem 'devise'
 
 gem 'faker', git: 'https://github.com/faker-ruby/faker.git', branch: 'master'
