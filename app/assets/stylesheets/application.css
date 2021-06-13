@@ -253,7 +253,7 @@ body {
   color: var(--clr-neon); 
   white-space: nowrap;
   font-family: Dejavu Serif;
-  font-size: 4.5rem;
+  font-size: 3vw;
   font-weight: 900;
 }
 
