@@ -57,7 +57,17 @@ Rails.application.configure do
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
+  config.cache_store = :redis_cache_store, {driver: :hiredis, url: ENV.fetch("REDIS_URL")}
 
+  config.session_store :redis_session_store,
+    key: "_session_production",
+    serializer: :json,
+    redis: {
+      driver: :hiredis,
+      expire_after: 1.year,
+      ttl: 1.year,
+      key_prefix: "app:session:"
+    }
   # Use a real queuing backend for Active Job (and separate queues per environment).
   # config.active_job.queue_adapter     = :resque
   # config.active_job.queue_name_prefix = "BraveNewEvents_production"
